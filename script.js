@@ -1,13 +1,13 @@
-function loadImage(fileName, callback) {
-    // if file ends with .png or .jpg return success else failure
-    if (fileName.endsWith(".pic") || fileName.endsWith(".jpg")) {
-        callback("uploaded")
-        return;
-    }
-    callback("Your format isn't correct !")
-
+function searchItem(arr, keyword, callback) {
+    // find matches using filter and call callback
+    let newArr = arr.filter((el) => {
+        if (el.includes(keyword)) {
+            return el;
+        }
+    });
+    callback(newArr)
 }
 
-loadImage("pic1.svg", function (msg) {
-    console.log(msg);
+searchItem(["apple", "mango", "banana"], "an", function (result) {
+    console.log(result);
 });
