@@ -1,10 +1,15 @@
-function onButtonClick(callback) {
-    // after 3 seconds call callback()
-    setTimeout(() => {
-        callback("Clicked")
-    }, 3000)
+function fetchData(callback) {
+    // generate random success or failed
+    setInterval(() => {
+        let val = Math.floor(Math.random() * 10);
+        if (val >= 5) {
+            callback("Success");
+        } else {
+            callback("Failed")
+        }
+    }, 2000)
 }
 
-onButtonClick(function () {
-    console.log("Button clicked");
+fetchData(function (result) {
+    console.log(result);
 });
