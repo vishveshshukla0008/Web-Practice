@@ -1,13 +1,10 @@
-function searchItem(arr, keyword, callback) {
-    // find matches using filter and call callback
-    let newArr = arr.filter((el) => {
-        if (el.includes(keyword)) {
-            return el;
-        }
-    });
-    callback(newArr)
+function onButtonClick(callback) {
+    // after 3 seconds call callback()
+    setTimeout(() => {
+        callback("Clicked")
+    }, 3000)
 }
 
-searchItem(["apple", "mango", "banana"], "an", function (result) {
-    console.log(result);
+onButtonClick(function () {
+    console.log("Button clicked");
 });
