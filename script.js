@@ -1,37 +1,25 @@
-let done1 = false;
-let done2 = false;
+let cards = document.querySelector(".cards");
+const colorArr = ["maroon", "#628141", "#1B211A", "#8BAE66", "#F79A19", "red"];
 
-function task1(callback) {
-    console.log("Task - 1 Scheduled")
-    setTimeout(() => {
-        done1 = true;
-        callback();
-        bothDone()
-    }, 2000);
-    // 2 second timeout then callback("Task 1 done")
-}
+async function fetchUser() {
+    try {
+        let rawData = await fetch("https://jsonplaceholder.typicode.com/posts");
+        let actualData = await rawData.json();
+        console.log(actualData);
+        let sum = "";
+        actualData.forEach((el) => {
+            let rnum = Math.floor(Math.random() * 5) + 1;
+            sum += `<div style="color:white;background:conic-gradient(${colorArr[rnum]}, ${colorArr[colorArr.length % rnum]},${colorArr[rnum]})" class="card">
+            <h1>ID: <span id="idNum"> ${el.id}</span></h1>
+            <h3>Title : <span id="title"> ${el.title}</span></h3>
+        </div>
+        `;
+        });
 
-function task2(callback) {
-    // 1 second timeout then callback("Task 2 done")
-    console.log("Task - 2 Scheduled")
-    setTimeout(() => {
-        done2 = true;
-        callback();
-        bothDone()
-    }, 3000);
-}
-
-// after both finish print "All tasks completed"
-
-task1(function () {
-    console.log("Task 1 Completed ✅")
-    task2(function () {
-        console.log("Task 2 Completed ✅")
-    })
-})
-
-function bothDone() {
-    if (done1 && done2) {
-        console.log("Both Done")
+        cards.innerHTML = sum;
+    } catch (error) {
+        console.error(error);
     }
 }
+
+fetchUser();

@@ -4,12 +4,37 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   width: 100%;
 }
 
-.main-wrapper {
-  height: 100%;
+body .cards {
   width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto;
+  padding: 1rem;
+  gap: 1rem;
+}
+body .cards .card {
+  max-width: 320px;
+  border: 1px solid red;
+  border-radius: 1rem;
+  padding: 1rem;
+  background-color: azure;
+}
+@media (max-width: 480px) {
+  body .cards {
+    grid-template-columns: 1fr 1fr;
+  }
+  body .cards .card {
+    width: 100%;
+  }
+}
+@media (max-width: 320px) {
+  body .cards {
+    grid-template-columns: 1fr;
+  }
 }/*# sourceMappingURL=style.css.map */
