@@ -1,29 +1,22 @@
-let windowIcon = document.querySelector("#window-icon");
-let windowsPanel = document.querySelector(".windows-panel");
-let main = document.querySelector("main");
-let rightClickCard = document.querySelector(".right-click-card");
-let windowModalOpen = false;
-windowIcon.addEventListener("click", () => {
-    if (windowModalOpen) {
-        windowModalOpen = false;
-        windowsPanel.style.transform = "translateY(120%)";
-        console.log("closing")
-    } else {
-        console.log("opening")
-        windowModalOpen = true;
-        windowsPanel.style.transform = "translateY(0%)"
-    }
-});
 
-window.oncontextmenu = e => {
-    e.preventDefault()
-    rightClickCard.classList.remove("hide");
-    rightClickCard.style.left = e.clientX + "px"
-    rightClickCard.style.top = e.clientY + "px"
+async function fetchUrl(city) {
+    try {
+        let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=b92e57938eaebc6ded1fcf3a2f5b4bc3&units=metric`
+        let raw = await fetch(url);
+        if (!raw.ok) {
+            throw new Error("Please check city name :")
+        }
+        let real = await raw.json()
+        // console.log(real)
+        if (real.main.temp < 25) {
+            console.warn("Bahuuuut thand hai ")
+        } else if (real.main.temp > 32) {
+            console.warn("Bahuut garm hai")
+        }
+    } catch (err) {
+        console.log(err);
+    }
 }
 
-main.addEventListener("click", () => {
-    rightClickCard.classList.add("hide");
-})
-
+fetchUrl("Lakhimpur")
 
