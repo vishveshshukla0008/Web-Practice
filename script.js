@@ -1,22 +1,30 @@
-
-async function fetchUrl(city) {
-    try {
-        let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=b92e57938eaebc6ded1fcf3a2f5b4bc3&units=metric`
-        let raw = await fetch(url);
-        if (!raw.ok) {
-            throw new Error("Please check city name :")
-        }
-        let real = await raw.json()
-        // console.log(real)
-        if (real.main.temp < 25) {
-            console.warn("Bahuuuut thand hai ")
-        } else if (real.main.temp > 32) {
-            console.warn("Bahuut garm hai")
-        }
-    } catch (err) {
-        console.log(err);
-    }
+function sendEmail(email) {
+    return new Promise((res, rej) => {
+        const time = Math.floor(Math.random() * 10)
+        setTimeout(() => {
+            const probability = Math.floor(Math.random() * 10);
+            if (probability <= 5) {
+                res(`Email has been sent to ${email}`)
+            } else rej(`Failed to sent the email to ${email}`);
+        }, time * 1000)
+    })
 }
 
-fetchUrl("Lakhimpur")
+const emailsArr = [
+    'yash@yash.yash',
+    'ankur@gmail.com',
+    'vishwesh@gmail.com'
+]
+
+async function sendEmails(emails) {
+    let newArr = emails.map((email) => {
+        return sendEmail(email).then((data) => data).catch(err => err);
+    })
+
+    let result = await Promise.all(newArr);
+    console.log(result)
+}
+
+sendEmails(emailsArr)
+
 
