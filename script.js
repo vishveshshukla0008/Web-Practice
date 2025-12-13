@@ -1,30 +1,57 @@
-function sendEmail(email) {
-    return new Promise((res, rej) => {
-        const time = Math.floor(Math.random() * 10)
-        setTimeout(() => {
-            const probability = Math.floor(Math.random() * 10);
-            if (probability <= 5) {
-                res(`Email has been sent to ${email}`)
-            } else rej(`Failed to sent the email to ${email}`);
-        }, time * 1000)
-    })
+class YoutubeChannel {
+    constructor() {
+        this.subscribers = [];
+    }
+
+    subscribe(user) {
+        this.subscribers.push(user);
+        user.update(`${user.name} subscribbed the channel`)
+    }
+
+    unSubscribe(user) {
+        if (!user) {
+            console.error("Provide a user at least");
+            return;
+        }
+        let isExists = this.subscribers.some((el) => el.name === user.name);
+        if (!isExists) {
+            console.warn("Please subscribe First !!")
+            return;
+        }
+        this.subscribers = this.subscribers.filter((el) => el.name !== user.name);
+        console.warn(`${user.name} is unsubscribbed your channel`)
+    }
+
+    showAllSubscribers() {
+        console.log(this.subscribers)
+    }
+
+    addVideo() {
+        this.notify("New Video is out now !!!")
+    }
+    notify(data) {
+        this.subscribers.forEach((user) => user.update(data))
+    }
 }
 
-const emailsArr = [
-    'yash@yash.yash',
-    'ankur@gmail.com',
-    'vishwesh@gmail.com'
-]
-
-async function sendEmails(emails) {
-    let newArr = emails.map((email) => {
-        return sendEmail(email).then((data) => data).catch(err => err);
-    })
-
-    let result = await Promise.all(newArr);
-    console.log(result)
+class User {
+    constructor(name) {
+        this.name = name;
+    }
+    update(data) {
+        console.log(`${this.name} ` + data)
+    }
 }
 
-sendEmails(emailsArr)
+let yashcodes = new YoutubeChannel();
+let user1 = new User("Ram");
+let user2 = new User("Shyam");
+let user3 = new User("GhanShyam");
+
+yashcodes.subscribe(user1);
+yashcodes.subscribe(user2);
+yashcodes.subscribe(user3);
+yashcodes.addVideo()
 
 
+// yashcodes.showAllSubscribers()
