@@ -1,26 +1,25 @@
-document.addEventListener("mousemove", throttle(function (e) {
-    console.log(`${e.clientX}, ${e.clientY}`);
-}, 1000))
+let allImages = document.querySelectorAll("img");
 
+let observer = new IntersectionObserver((entries, obs) => {
 
-function throttle(fn, delay) {
-    let timer = 0;
-    return function (e) {
-        let now = Date.now();
-        if (now - timer >= delay) {
-            timer = now;
-            fn(e);
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            console.log(true)
+            let img = entry.target;
+            console.log(img)
+            img.src = img.dataset.src;
+            img.classList.add("loaded");
+            // obs.unobserve(entry.target)
         }
-    }
-}
+    })
+}, {
+    root: null,
+    threshold: 0.1,
+});
 
-function debounce(fn, delay) {
-    let timer;
 
-    return function (e) {
-        clearInterval(timer)
-        timer = setTimeout(() => {
-            fn(e)
-        }, 2000)
-    }
-}
+allImages.forEach((img) => {
+    observer.observe(img)
+})
+
+console.log(observer)
