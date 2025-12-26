@@ -1,30 +1,23 @@
-var digitSum = function (s, k) {
-    while (s.length > k) {
-        s = roundTrip(s, k);
-    }
-    return s;
-
-
-    function roundTrip(s, k) {
-        let i = 0;
-        let j = 0;
-        let ans = "";
-        let sum = 0;
-        for (; i < s.length;) {
-            while (j < k && i < s.length) {
-                sum += (s[i] - '0');
-                j++;
-                i++;
+var areNumbersAscending = function (s) {
+    let strArr = s.split(" ");
+    let ans = true;
+    let prev = null;
+    for (let i = 0; i < strArr.length; i++) {
+        if (!isNaN(strArr[i])) {
+            let curr = Number(strArr[i]);
+            if (prev == null) {
+                prev = curr;
+            } else if (curr <= prev) {
+                ans = false;
+                break;
+            } else {
+                prev = curr;
+                curr = strArr[i];
             }
-            ans = ans + sum;
-            sum = 0;
-            j = 0;
         }
-
-        return ans;
-
     }
+
+    return ans;
 };
 
-
-console.log(digitSum("11111222223", 3));
+console.log(areNumbersAscending("hello world 5 x 6"));
