@@ -1,0 +1,48 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes angleChange {
+  from {
+    --angle: 0deg;
+  }
+  to {
+    --angle: 360deg;
+  }
+}
+.main-wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000;
+}
+.main-wrapper .box {
+  height: 400px;
+  width: 400px;
+  background-color: red;
+  color: whitesmoke;
+  box-shadow: 0px 0px 50px rgb(7, 221, 7);
+  border-radius: 20px;
+  padding: 10px;
+  border: 10px solid transparent;
+  animation: angleChange 4s backwards alternate infinite ease-in-out;
+  background: linear-gradient(#000000) padding-box, conic-gradient(from var(--angle), rgb(255, 251, 0), black, black, rgb(251, 251, 7)) border-box;
+}
+.main-wrapper .box img {
+  width: 100%;
+}/*# sourceMappingURL=style.css.map */
