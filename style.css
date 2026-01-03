@@ -36,13 +36,23 @@ body {
   width: 400px;
   background-color: red;
   color: whitesmoke;
-  box-shadow: 0px 0px 50px rgb(7, 221, 7);
   border-radius: 20px;
   padding: 10px;
-  border: 10px solid transparent;
-  animation: angleChange 4s backwards alternate infinite ease-in-out;
+  border: 0px solid transparent;
+  animation: angleChange 1s infinite linear;
+  animation-play-state: paused;
+  transition: all ease-in-out 0.25s;
   background: linear-gradient(#000000) padding-box, conic-gradient(from var(--angle), rgb(255, 251, 0), black, black, rgb(251, 251, 7)) border-box;
 }
 .main-wrapper .box img {
   width: 100%;
+}
+.main-wrapper .box:hover {
+  animation-play-state: running;
+  border-width: 10px;
+  box-shadow: 0px 0px 50px rgb(7, 221, 7);
+  text-shadow: 0 0 10px rgb(251, 251, 7);
+}
+.main-wrapper .box:hover h1, .main-wrapper .box:hover p {
+  color: rgb(251, 251, 7);
 }/*# sourceMappingURL=style.css.map */
