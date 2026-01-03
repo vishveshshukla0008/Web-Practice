@@ -20,13 +20,20 @@ body {
   align-items: center;
   gap: 2rem;
 }
+.main-wrapper:has(.box:hover) .box {
+  scale: 0.88;
+  filter: blur(10px);
+}
 .main-wrapper .box {
   height: 100px;
   width: 100px;
   border-radius: 0.5rem;
+  transition: transform 0.44s ease-in-out, filter 0.45s ease-in-out;
+  will-change: transform, filter;
 }
 .main-wrapper .box:hover {
-  anchor-name: --some-anchor;
+  scale: 1.23 !important;
+  filter: blur(0px) !important;
 }
 .main-wrapper .red {
   background-color: red;
@@ -36,17 +43,4 @@ body {
 }
 .main-wrapper .blue {
   background-color: blue;
-}
-.main-wrapper .anchor {
-  background-color: blueviolet;
-  position: absolute;
-  position-anchor: --some-anchor;
-  top: anchor(top);
-  left: anchor(left);
-  bottom: anchor(bottom);
-  right: anchor(right);
-  border-radius: 10px;
-  transition: all ease 0.22s;
-  mix-blend-mode: exclusion;
-  pointer-events: none;
 }/*# sourceMappingURL=style.css.map */
