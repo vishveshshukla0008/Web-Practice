@@ -1,4 +1,25 @@
-import app from "./app.js";
-const root = ReactDOM.createRoot(document.querySelector("#root"));
+var decodeMessage = function (key, message) {
+    let map = new Map();
+    let count = 97;
+    let ans = "";
+    for (let el of key) {
+        if (el !== ' ' && !map.has(el)) {
+            map.set(el, String.fromCharCode(count))
+            count++;
+        }
+    }
 
-root.render(app())
+
+    for (let item of message) {
+        if (item == " ") {
+            ans += ' ';
+        } else {
+            ans += map.get(item);
+        }
+    }
+
+    // console.log(ans)
+};
+
+
+decodeMessage("the quick brown fox jumps over the lazy dog", "vkbs bs t suepuv")

@@ -1,46 +1,267 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+:root {
+  /* Effect controls */
+  --spot-hsl: 190 90% 60%; /* cyan-ish */
+  --spot-alpha: 0.7; /* brightness of highlight */
+  --spot-fade: 18vmin; /* radius / falloff of the spotlight */
+  --bw: 3px; /* border width (the lit ring thickness) */
+  --mx: -9999; /* mouse x (px) – set by JS */
+  --my: -9999; /* mouse y (px) – set by JS */
+
+  /* Theme */
+  --bg: hsl(220 15% 7%);
+  --panel: hsl(220 15% 10%);
+  --text: hsl(210 15% 92%);
+  --muted: hsl(220 10% 65% / 0.85);
+  --border-base: hsl(210 10% 28% / 0.6);
+  --accent: hsl(190 90% 60%);
 }
 
+* {
+  box-sizing: border-box;
+}
 html,
 body {
   height: 100%;
-  width: 100%;
-  anchor-name: --some-anchor;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 15px/1.55 Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI,
+    Roboto, Arial, sans-serif;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+.container {
+  width: min(1120px, 92vw);
+  margin-inline: auto;
 }
 
-.main-wrapper {
-  height: 100%;
-  width: 100%;
-  background-color: rgb(65, 41, 41);
+/* Header */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: color-mix(in oklab, var(--bg) 88%, black 12%);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid hsl(0 0% 100% / 0.04);
+}
+.nav {
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 2rem;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 14px 0;
 }
-.main-wrapper:has(.box:hover) .box {
-  scale: 0.88;
-  filter: blur(10px);
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
 }
-.main-wrapper .box {
-  height: 100px;
-  width: 100px;
-  border-radius: 0.5rem;
-  transition: transform 0.44s ease-in-out, filter 0.45s ease-in-out;
-  will-change: transform, filter;
+.brand-badge {
+  width: 26px;
+  aspect-ratio: 1;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent), hsl(270 85% 60%));
 }
-.main-wrapper .box:hover {
-  scale: 1.23 !important;
-  filter: blur(0px) !important;
+.links {
+  display: flex;
+  gap: 18px;
 }
-.main-wrapper .red {
-  background-color: red;
+.links a {
+  color: var(--muted);
+  font-weight: 600;
 }
-.main-wrapper .green {
-  background-color: green;
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-weight: 700;
+  background: linear-gradient(
+    180deg,
+    hsl(0 0% 100% / 0.08),
+    hsl(0 0% 100% / 0.02)
+  );
+  outline: 1px solid hsl(0 0% 100% / 0.08);
 }
-.main-wrapper .blue {
-  background-color: blue;
-}/*# sourceMappingURL=style.css.map */
+
+/* Hero */
+.hero {
+  padding: 64px 0;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 28px;
+  align-items: center;
+}
+.hero h1 {
+  font-size: clamp(28px, 4vw, 46px);
+  line-height: 1.1;
+  margin: 0 0 12px;
+  letter-spacing: -0.02em;
+}
+.hero p {
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+.hero .actions {
+  display: flex;
+  gap: 12px;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  padding: 12px 16px;
+  border-radius: 12px;
+  position: relative;
+  background: var(--panel);
+  outline: 1px solid var(--border-base);
+}
+.btn.primary {
+  background: hsl(190 90% 60% / 0.08);
+  outline-color: hsl(190 90% 60% / 0.45);
+}
+
+.hero-visual {
+  aspect-ratio: 4/3;
+  border-radius: 18px;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(
+      60% 60% at 30% 20%,
+      hsl(190 90% 60% / 0.15),
+      transparent 70%
+    ),
+    linear-gradient(180deg, hsl(0 0% 100% / 0.06), hsl(0 0% 100% / 0.01)),
+    var(--panel);
+  outline: 1px solid var(--border-base);
+}
+.hero-visual .hint {
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  color: var(--muted);
+  font-weight: 600;
+  background: hsl(0 0% 100% / 0.03);
+  border-radius: 999px;
+  padding: 6px 10px;
+  outline: 1px solid hsl(0 0% 100% / 0.06);
+}
+
+/* Feature grid */
+.section {
+  padding: 36px 0 72px;
+}
+.section h2 {
+  margin: 0 0 8px;
+  font-size: clamp(22px, 3vw, 32px);
+}
+.section p.lead {
+  margin: 0 0 24px;
+  color: var(--muted);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+.card {
+  position: relative;
+  border-radius: 16px;
+  overflow: clip; /* keep pseudo-element clipped */
+  background: linear-gradient(
+    180deg,
+    hsl(0 0% 100% / 0.05),
+    hsl(0 0% 100% / 0.02)
+  );
+  outline: 1px solid var(--border-base);
+  padding: 18px;
+  min-height: 150px;
+}
+.card h3 {
+  margin: 0 0 6px;
+  font-size: 1.1rem;
+}
+.card p {
+  margin: 0;
+  color: var(--muted);
+}
+.num {
+  position: absolute;
+  bottom: 10px;
+  right: 12px;
+  font-weight: 800;
+  color: hsl(0 0% 100% / 0.75);
+  font-size: 1.6rem;
+}
+
+
+/* === Spotlight-on-BORDERS ONLY ===============================
+     Apply .glow-border to any element whose border should light up.
+     The pseudo creates a ring using a mask that follows border-radius.
+  ============================================================= */
+.glow-border {
+  position: relative;
+}
+
+.glow-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  /* Paint the glow as a viewport-anchored radial that tracks the mouse */
+  background: radial-gradient(
+    circle at calc(var(--mx) * 1px) calc(var(--my) * 1px),
+    hsl(var(--spot-hsl) / var(--spot-alpha)) 0%,
+    transparent var(--spot-fade)
+  );
+  background-attachment: fixed;
+
+  /* Turn that fill into a ring matching --bw using an XOR (hole) mask */
+  padding: var(--bw);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor; /* Safari/WebKit */
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude; /* Standard */
+}
+
+/* Make sure nothing else tints — no interior overlay anywhere */
+.glow-border::after {
+  content: none;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 760px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Accessibility: reduce repaint frequency if reduced motion is set */
+@media (prefers-reduced-motion: reduce) {
+  /* Keep border effect but lower intensity a bit */
+  :root {
+    --spot-alpha: 0.55;
+  }
+}
