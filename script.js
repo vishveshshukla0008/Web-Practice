@@ -1,25 +1,15 @@
-var decodeMessage = function (key, message) {
-    let map = new Map();
-    let count = 97;
-    let ans = "";
-    for (let el of key) {
-        if (el !== ' ' && !map.has(el)) {
-            map.set(el, String.fromCharCode(count))
-            count++;
-        }
-    }
+// Changes the value into binary from decimal :
 
 
-    for (let item of message) {
-        if (item == " ") {
-            ans += ' ';
-        } else {
-            ans += map.get(item);
-        }
-    }
+let num = 65;
+let ans = "";
 
-    // console.log(ans)
-};
+while (num > 0) {
+    let bit = num % 2;
+    ans = bit + ans;
+    // update the value :
+    num = Math.floor(num / 2);
+}
 
 
-decodeMessage("the quick brown fox jumps over the lazy dog", "vkbs bs t suepuv")
+console.log(ans)
