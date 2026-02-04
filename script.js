@@ -1,15 +1,40 @@
-// Changes the value into binary from decimal :
+const userProfile = {
+    id: 101,
+    details: {
+        firstName: "Rahul",
+        lastName: "Sharma",
+        address: {
+            city: "Mumbai",
+            coordinates: {
+                lat: 19.076,
+                lng: 72.877
+            }
+        }
+    },
+    hobbies: ["Photography", "Coding", { type: "Sport", name: "Cricket" }],
+    createdAt: new Date()
+};
 
+function makeDeepCopy(obj) {
+    if (obj == null || typeof obj !== 'object') {
+        return obj;
+    }
 
-let num = 65;
-let ans = "";
+    if (obj instanceof Date) {
+        return new Date(obj.getTime())
+    }
 
-while (num > 0) {
-    let bit = num % 2;
-    ans = bit + ans;
-    // update the value :
-    num = Math.floor(num / 2);
+    //perform Deepclone :
+
+    let copiedVal = Array.isArray(obj) ? [] : {};
+    let keys = Object.keys(obj);
+
+    keys.forEach((el, idx) => {
+        copiedVal[el] = makeDeepCopy(obj[el]);
+    })
+
+    return copiedVal
 }
 
-
-console.log(ans)
+let copy = makeDeepCopy(userProfile);
+console.log(copy)
